@@ -36,12 +36,17 @@ class eu_iksproject_fise extends midgardmvc_core_component_baseclass
         $reflectionproperty = new midgard_reflection_property(get_class($object));
         foreach ($props as $property => $value)
         {
+            if (!$value)
+            {
+                continue;
+            }
+
             $type = $reflectionproperty->get_midgard_type($property);
             switch ($type)
             {
                 case MGD_TYPE_STRING:
                 case MGD_TYPE_LONGTEXT:
-                    $text .= strip_tags($object->content) . "\n\n";
+                    $text .= strip_tags(str_replace('>', '> ', $object->$property)) . "\n\n";
                     break;
             }
         }
