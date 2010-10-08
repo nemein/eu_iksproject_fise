@@ -7,13 +7,13 @@
  */
 
 /**
- * Midgard MVC administrative interface
+ * FISE indexer
  *
  * @package eu_iksproject_fise
  */
-class eu_iksproject_fise extends midgardmvc_core_component_baseclass
+class eu_iksproject_fise_indexer
 {
-    public function inject_process()
+    public function inject_process(midgardmvc_core_request $request)
     {
         // Subscribe to content changed signals from Midgard so we can send content to FISE for analysis
         $mgdschemas = midgardmvc_core::get_instance()->dispatcher->get_mgdschema_classes();
@@ -24,8 +24,8 @@ class eu_iksproject_fise extends midgardmvc_core_component_baseclass
             {
                 continue;
             }
-            midgard_object_class::connect_default($mgdschema, 'action-created', array('eu_iksproject_fise', 'store'), array());
-            midgard_object_class::connect_default($mgdschema, 'action-updated', array('eu_iksproject_fise', 'store'), array());
+            midgard_object_class::connect_default($mgdschema, 'action-created', array('eu_iksproject_fise_indexer', 'store'), array());
+            midgard_object_class::connect_default($mgdschema, 'action-updated', array('eu_iksproject_fise_indexer', 'store'), array());
         }
     }
 
